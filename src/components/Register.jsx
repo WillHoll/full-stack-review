@@ -13,6 +13,7 @@ class Register extends Component {
     password2: ''
   }
 
+
   handleChange = (key, value) => {
     this.setState({
       [key]: value
