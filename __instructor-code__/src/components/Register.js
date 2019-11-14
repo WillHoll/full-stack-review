@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import './Register.css'
 
 export default class Register extends Component {
   state = {
@@ -17,7 +18,7 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div>
+      <div className='register'>
         <input
           value={this.state.email}
           onChange={e => this.handleChange('email', e.target.value)}
