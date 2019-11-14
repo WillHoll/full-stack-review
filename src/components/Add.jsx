@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Add.css'
 
 class Add extends Component {
   state = {
@@ -9,8 +10,15 @@ class Add extends Component {
   
   render() {
     return (
-      <div>
-        Add.jsx
+      <div className='add'>
+        <i onClick={this.props.toggle} className="fas fa-times fa-2x"></i>
+        <input placeholder='Title' type="text"/>
+        <input placeholder='Image URL' type="text"/>
+        <div className="img-container">
+          <img src={this.state.imgUrl} alt=""/>
+        </div>
+        <textarea placeholder='What do you want to say?'/>
+        <button>Post</button>
       </div>
     );
   }
