@@ -18,7 +18,7 @@ app.use(session({
 app.post('/auth/register', authCtrl.register )
 
 massive(CONNECTION_STRING).then(db => {
-  app.set(db, 'db')
+  app.set('db', db)
   app.listen(SERVER_PORT, () =>
     console.log(`${SERVER_PORT} master 6000`))
 })

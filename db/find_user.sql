@@ -1,2 +1,2 @@
 SELECT COUNT(*) FROM homies
-WHERE email = ${1};
+WHERE email = $1;

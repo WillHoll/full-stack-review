@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Register.css'
+import axios from 'axios'
+import {updateUserInfo} from '../ducks/reducer'
+import {connect} from 'react-redux'
 
 class Register extends Component {
   state = {
@@ -16,6 +19,23 @@ class Register extends Component {
     })
   }
 
+  register = () => {
+    if (this.state.password1 === this.state.password2) {
+    const {name, email, password1:password} = this.state
+    axios
+      .post('/auth/register', {name, email, password})
+      .then(res => {
+        console.log(res.data)
+        this.props.updateUserInfo(res.data.user)
+      })
+      .catch(err => {
+        console.log(err.response.data.message)
+      })
+    } else {
+      console.log('passwords dont match')
+    }
+  }
+
   render() {
     return (
       <div className='register'>
@@ -23,8 +43,8 @@ class Register extends Component {
         <input value={this.state.name} onChange={e => this.handleChange('name', e.target.value)} placeholder='Name ' type="text" />
         <input value={this.state.password1} onChange={e => this.handleChange('password1', e.target.value)} placeholder='Password' type="password" />
         <input value={this.state.password2} onChange={e => this.handleChange('password2', e.target.value)} placeholder='Retype password' type="password" />
-        <button>Register</button>
-        <Link to='/login'>
+        <button onClick={this.register}>Register</button>
+        <Link to='/'>
           <h4>Already have an account? Login here</h4>
         </Link>
       </div>
@@ -32,4 +52,9 @@ class Register extends Component {
   }
 }
 
-export default Register;
+function mapStateToProps(reduxState) {
+  return reduxState
+}
+
+
+export default connect(mapStateToProps, {updateUserInfo})(Register);
