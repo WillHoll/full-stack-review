@@ -5,7 +5,6 @@ module.exports = {
     const db = req.app.get('db')
     const {email, password, name} = req.body
     const found = await db.find_user([email])
-    console.log(found)
     if (+found[0].count !== 0) {
       return res.status(409).send({message: 'Email already registered'})
     }
@@ -31,5 +30,9 @@ module.exports = {
     }
     req.session.user = {homie_id, email, name, profile_img}
     res.status(200).send({message: 'Logged in', user: req.session.user})
+  },
+  logout: (req, res) => {
+    req.session.destroy()
+    res.status(200).send({message: 'Logged out'})
   }
 }

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios'
 import { updateUserInfo } from './../ducks/reducer';
 import { connect } from 'react-redux';
+import Swal from 'sweetalert2'
 
 class Login extends Component {
   state = {
@@ -10,23 +11,23 @@ class Login extends Component {
     password: ''
   }
 
-  handleChange = (key, value) =>  {
-    this.setState({[key]: value})
+  handleChange = (key, value) => {
+    this.setState({ [key]: value })
   }
 
   login = () => {
-    const {email, password} = this.state
+    const { email, password } = this.state
     axios
-      .post('auth/login', {email, password})
+      .post('/auth/login', { email, password })
       .then(res => {
         this.props.updateUserInfo(res.data.user)
-        alert(res.data.message)
+        Swal.fire(res.data.message)
       })
       .catch(err => {
-        alert(err.response.data.message)
+        Swal.fire(err.response.data.message)
       })
   }
-  
+
   render() {
     return (
       <div>
@@ -41,4 +42,4 @@ class Login extends Component {
   }
 }
 
-export default connect(null, {updateUserInfo})(Login);
+export default connect(null, { updateUserInfo })(Login);
